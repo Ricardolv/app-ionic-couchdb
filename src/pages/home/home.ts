@@ -1,15 +1,17 @@
-import { UsuarioProvider } from './../../providers/usuario/usuario-provider';
-
-import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Usuario } from '../../entity/Usuario';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Dialogs } from '@ionic-native/dialogs';
+
+import { Component } from '@angular/core';
+
+import { UsuarioProvider } from './../../providers/usuario/usuario-provider';
+import { Usuario } from '../../entity/Usuario';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
-  providers: [Geolocation, Camera]
+  providers: [Geolocation, Camera, Dialogs]
 })
 export class HomePage {
 
@@ -23,7 +25,8 @@ export class HomePage {
   }
 
   constructor(public navCtrl: NavController, public usuarioService: UsuarioProvider,
-              private geolocation: Geolocation, private camera: Camera) {
+              private geolocation: Geolocation, private camera: Camera,
+              private dialogs: Dialogs) {
 
   }
 
@@ -52,6 +55,8 @@ export class HomePage {
 
       this.usuarioService.createUsuario(this.usuario);
 
+      this.dialogs.alert('Usuário salvo com sucesso!');
+
      }).catch((error) => {
        console.log('Error getting location', error);
      });
@@ -62,7 +67,8 @@ export class HomePage {
     let base64Image = 'data:image/jpeg;base64,' + imageData;
     this.usuario.foto = base64Image;
 
-     console.log("upload feito com sucesso");
+    this.dialogs.alert('Upload feito com sucesso!');
+
     }, (err) => {
       console.log(err);
     });
