@@ -1,17 +1,51 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>
+      Exemplo Usuário
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-item>
+    <ion-label>Nome</ion-label>
+    <ion-input type="text" [(ngModel)]="usuario.nome" name="nome"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Idade</ion-label>
+    <ion-input type="number" [(ngModel)]="usuario.idade" name="idade"></ion-input>
+  </ion-item>
+  <button ion-button round (click)="salvarUsuario()">Salvar</button>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        Nome
+      </ion-col>
+      <ion-col>
+        Idade
+      </ion-col>
+      <ion-col>
+        Editar
+      </ion-col>
+      <ion-col>
+        Deletar
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let user of usuarios">
+      <ion-col>
+        {{user.nome}}
+      </ion-col>
+      <ion-col>
+        {{user.idade}}
+      </ion-col>
+      <ion-col>
+        <button ion-button round (click)="editar(user)">Editar</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button round (click)="deletar(user)">Deletar</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
