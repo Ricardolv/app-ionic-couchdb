@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import PouchDB from 'pouchdb';
+import PouchDBFind from 'pouchdb-find';
+PouchDB.plugin(PouchDBFind);
 
 @Injectable()
 export class UsuarioProvider {
@@ -22,8 +24,26 @@ export class UsuarioProvider {
     this.db.sync(this.remote, options);
   }
 
-  public criarUsuario(usuario: any) {
+  public searchUsuario(nome: string) {
+    return this.db.find({
+      selector: { nome: { $regex: nome} }
+    })
+  }
+
+  public createUsuario(usuario: any) {
     this.db.post(usuario);
+  }
+
+  public updateUsuario(usuario:any){
+
+    this.db.put(usuario).catch((err)=>{
+
+    })
+
+  }
+
+  public removeUsuario(usuario:any){
+    this.db.remove(usuario);
   }
 
   public getUsuarios() {
@@ -38,7 +58,7 @@ export class UsuarioProvider {
       }).then((result) => {
         this.data = [];
 
-        result.rows.map((row) => {
+        let docs = result.rows.map((row) => {
           this.data.push(row.doc);
         });
 
@@ -53,8 +73,29 @@ export class UsuarioProvider {
 
   }
 
-  public handleChange(change: any){
+  handleChange(change) {
+    let changedDoc = null;
+    let changedIndex = null;
 
+    this.data.forEach((doc, index) => {
+      if (doc._id === change.id) {
+        changedDoc = doc;
+        changedIndex = index;
+      }
+    });
+
+    //Documento deletado
+    if (change.deleted) {
+      this.data.splice(changedIndex, 1);
+    } else {
+      if (changedDoc) {
+        //Documento atualizado
+        this.data[changedIndex] = change.doc;
+      } else {
+        //Documento adicionado
+        this.data.push(change.doc);
+      }
+    }
   }
 
 }

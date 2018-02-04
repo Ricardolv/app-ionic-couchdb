@@ -15,4 +15,8 @@ export class ContactPage {
     })
   }
 
+  public searchUser(event){
+    this.usuarioService.searchUsuario(event).then(resultado => this.usuarios =  resultado.docs);
+  }
+
 }

@@ -1,6 +1,7 @@
+import { UsuarioProvider } from './../../providers/usuario/usuario';
+
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UsuarioProvider } from '../../providers/usuario/usuario';
 
 @Component({
   selector: 'page-home',
@@ -27,8 +28,12 @@ export class HomePage {
     this.usuario = usuario;
   }
 
+  public deletar(usuario){
+    this.usuarioService.removeUsuario(usuario);
+  }
+
   public salvarUsuario() {
-      this.usuarioService.criarUsuario(this.usuario);
+      this.usuarioService.createUsuario(this.usuario);
   };
 
 }

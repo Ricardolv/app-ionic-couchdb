@@ -7,6 +7,7 @@
 </ion-header>
 
 <ion-content>
+  <ion-input [(ngModel)]="inputSearch" (ngModelChange)="searchUser($event)"></ion-input>
   <ion-list *ngFor="let usuario of usuarios">
     <ion-list-header>{{usuario.idade}}</ion-list-header>
     <ion-item>
