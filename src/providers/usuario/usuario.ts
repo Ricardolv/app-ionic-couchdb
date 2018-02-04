@@ -9,11 +9,14 @@ export class UsuarioProvider {
   public data: any;
   public db: any;
   public remote: any;
+  public remote2: any;
 
   constructor() {
     this.db = new PouchDB("usuario");
 
-    this.remote = 'http://192.168.99.100:32777/usuario';
+    this.remote  = 'http://192.168.99.100:32777/usuario';
+    this.remote2 = 'http://35.185.9.151:8888/usuario';
+
 
     let options = {
       live: true,
@@ -22,6 +25,7 @@ export class UsuarioProvider {
     }
 
     this.db.sync(this.remote, options);
+    this.db.sync(this.remote2, options);
   }
 
   public searchUsuario(nome: string) {
