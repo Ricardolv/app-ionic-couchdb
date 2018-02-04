@@ -1,18 +1,21 @@
-import { UsuarioProvider } from './../../providers/usuario/usuario';
+import { UsuarioProvider } from './../../providers/usuario/usuario-provider';
 
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
+import { Usuario } from '../../entity/Usuario';
 
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+  providers: [Geolocation]
 })
 export class HomePage {
 
   public usuarios: any;
-  public usuario= {nome:"",idade:""};
+  public usuario = new Usuario();
 
-  constructor(public navCtrl: NavController, public usuarioService: UsuarioProvider) {
+  constructor(public navCtrl: NavController, public usuarioService: UsuarioProvider, private geolocation: Geolocation) {
 
   }
 
@@ -33,7 +36,19 @@ export class HomePage {
   }
 
   public salvarUsuario() {
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+
+      this.usuario.latitude = resp.coords.latitude;
+      this.usuario.longitude = resp.coords.longitude;
+
       this.usuarioService.createUsuario(this.usuario);
+
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+
+
   };
 
 }

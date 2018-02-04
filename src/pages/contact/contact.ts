@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { UsuarioProvider } from '../../providers/usuario/usuario';
+import { UsuarioProvider } from '../../providers/usuario/usuario-provider';
 
 @Component({
   selector: 'page-contact',
