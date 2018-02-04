@@ -15,6 +15,14 @@
     <ion-label>Idade</ion-label>
     <ion-input type="number" [(ngModel)]="usuario.idade" name="idade"></ion-input>
   </ion-item>
+  <ion-item>
+    <button ion-button icon-only (click)="uploadImagem()">
+      <ion-icon name="cloud-upload"></ion-icon>
+    </button>
+  </ion-item>
+  <ion-item *ngIf="usuario.foto != '' ">
+    <img width="80" height="80" [src]="usuario.foto">
+  </ion-item>
   <button ion-button round (click)="salvarUsuario()">Salvar</button>
 
   <ion-grid>

@@ -4,4 +4,9 @@ export class Usuario {
   idade: number;
   latitude: number;
   longitude: number;
+  foto: string;
+
+  constructor() {
+    this.foto = '';
+  }
 }
